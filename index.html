@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CO2+ — Bæredygtige typehuse i moduler</title>
+<meta name="description" content="CO2+ er et typehus-system, hvor bæredygtige huse bygges af træmoduler på et 60 cm grid. Sæt dit hjem sammen, som du vil — gennemtænkt, energieffektivt og CO2-venligt." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #f6f1e7;
+    --cream-deep: #efe7d6;
+    --paper: #fbf8f1;
+    --ink: #2b2a24;
+    --muted: #6c6557;
+    --forest: #3f4d39;
+    --sage: #6e8062;
+    --sage-soft: #aeba9f;
+    --terra: #bd6442;
+    --terra-soft: #e2a385;
+    --wood: #cba87b;
+    --line: #e4dac6;
+    --shadow: 0 18px 50px -24px rgba(63, 77, 57, 0.45);
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
+
+  .wrap {
+    width: min(1140px, 100% - 48px);
+    margin-inline: auto;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sage);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 1.5px;
+    background: var(--sage);
+    display: inline-block;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246, 241, 231, 0.82);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  header.scrolled { border-color: var(--line); }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 74px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.32rem;
+    letter-spacing: -0.01em;
+  }
+  .brand .mark {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: var(--forest);
+    color: var(--cream);
+    display: grid; place-items: center;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow);
+  }
+  .brand .mark sub { font-size: 0.62em; vertical-align: -0.15em; }
+  .nav-links { display: flex; align-items: center; gap: 34px; }
+  .nav-links a {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color 0.2s ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 13px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary { background: var(--forest); color: var(--cream); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { background: var(--paper); border-color: var(--sage-soft); }
+  .nav-toggle { display: none; background: none; border: 0; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px 0; border-radius: 2px; transition: 0.25s; }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 64px 0 40px; overflow: hidden; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.02fr 0.98fr;
+    gap: 54px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 5.4vw, 4.05rem);
+    margin: 22px 0 0;
+  }
+  .hero h1 em { font-style: italic; color: var(--terra); }
+  .hero .lede {
+    font-size: 1.16rem;
+    color: var(--muted);
+    margin-top: 22px;
+    max-width: 30ch;
+  }
+  .hero-cta { display: flex; gap: 14px; margin-top: 34px; flex-wrap: wrap; }
+  .hero-art {
+    position: relative;
+    filter: drop-shadow(0 30px 40px rgba(63, 77, 57, 0.18));
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 64px;
+  }
+  .stat {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px 20px;
+  }
+  .stat b {
+    font-family: "Fraunces", serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    display: block;
+    color: var(--forest);
+  }
+  .stat span { font-size: 0.86rem; color: var(--muted); }
+
+  /* ---------- Section base ---------- */
+  section { padding: 84px 0; }
+  .section-head { max-width: 46ch; margin-bottom: 50px; }
+  .section-head h2 {
+    font-size: clamp(1.9rem, 3.6vw, 2.85rem);
+    margin-top: 16px;
+  }
+  .section-head p { color: var(--muted); margin-top: 16px; font-size: 1.08rem; }
+
+  /* ---------- Concept split ---------- */
+  .concept { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .concept-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .concept-copy h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); margin-top: 16px; }
+  .concept-copy p { color: var(--muted); margin-top: 18px; font-size: 1.07rem; }
+  .concept-copy .pullout {
+    margin-top: 26px;
+    padding-left: 22px;
+    border-left: 3px solid var(--terra);
+    font-family: "Fraunces", serif;
+    font-size: 1.22rem;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* ---------- Steps ---------- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    counter-reset: step;
+  }
+  .step {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+    position: relative;
+  }
+  .step .ico {
+    width: 52px; height: 52px;
+    border-radius: 13px;
+    background: var(--cream-deep);
+    display: grid; place-items: center;
+    color: var(--forest);
+    margin-bottom: 22px;
+  }
+  .step .num {
+    counter-increment: step;
+    position: absolute; top: 26px; right: 26px;
+    font-family: "Fraunces", serif;
+    font-size: 0.95rem; color: var(--sage-soft);
+  }
+  .step .num::before { content: "0" counter(step); }
+  .step h3 { font-size: 1.18rem; }
+  .step p { color: var(--muted); margin-top: 9px; font-size: 0.95rem; }
+
+  /* ---------- CO2 panel ---------- */
+  .carbon { background: var(--forest); color: var(--cream); border-radius: 28px; overflow: hidden; }
+  .carbon-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; }
+  .carbon-copy { padding: 64px clamp(28px, 5vw, 64px); }
+  .carbon .eyebrow { color: var(--sage-soft); }
+  .carbon .eyebrow::before { background: var(--sage-soft); }
+  .carbon h2 { font-size: clamp(1.9rem, 3.4vw, 2.7rem); margin-top: 16px; color: var(--cream); }
+  .carbon p { color: #e4ddca; margin-top: 18px; font-size: 1.06rem; }
+  .carbon .meter {
+    margin-top: 32px;
+    display: grid;
+    gap: 14px;
+  }
+  .meter-row { display: grid; grid-template-columns: 130px 1fr; align-items: center; gap: 16px; font-size: 0.9rem; }
+  .meter-track { height: 12px; background: rgba(255,255,255,0.13); border-radius: 999px; overflow: hidden; }
+  .meter-fill { height: 100%; border-radius: 999px; width: 0; transition: width 1.1s cubic-bezier(.4,0,.1,1); }
+  .carbon-art { align-self: stretch; min-height: 320px; position: relative; }
+
+  /* ---------- Modules / grid ---------- */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+  .tag {
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 999px;
+    background: var(--cream-deep);
+    border: 1px solid var(--line);
+    color: var(--forest);
+  }
+
+  /* ---------- Benefits ---------- */
+  .benefits { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .benefit {
+    padding: 30px 28px;
+    border-radius: var(--radius);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .benefit:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .benefit .ico {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: var(--forest); color: var(--cream);
+    display: grid; place-items: center; margin-bottom: 20px;
+  }
+  .benefit h3 { font-size: 1.16rem; }
+  .benefit p { color: var(--muted); margin-top: 9px; font-size: 0.95rem; }
+
+  /* ---------- Vision quote ---------- */
+  .vision { text-align: center; }
+  .vision blockquote {
+    font-family: "Fraunces", serif;
+    font-size: clamp(1.6rem, 3.6vw, 2.55rem);
+    font-weight: 500;
+    line-height: 1.3;
+    max-width: 18ch;
+    margin: 0 auto;
+    letter-spacing: -0.01em;
+  }
+  .vision blockquote em { font-style: italic; color: var(--terra); }
+  .vision .by { margin-top: 28px; color: var(--muted); font-size: 0.95rem; }
+
+  /* ---------- CTA ---------- */
+  .cta-card {
+    background: linear-gradient(160deg, var(--cream-deep), var(--cream));
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    padding: clamp(40px, 6vw, 70px);
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .cta-card h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); }
+  .cta-card p { color: var(--muted); margin: 16px auto 0; max-width: 44ch; font-size: 1.07rem; }
+  .signup {
+    margin: 32px auto 0;
+    display: flex;
+    gap: 10px;
+    max-width: 470px;
+  }
+  .signup input {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+  .signup input:focus { outline: 2px solid var(--sage-soft); outline-offset: 1px; }
+  .cta-note { margin-top: 16px; font-size: 0.82rem; color: var(--muted); }
+
+  /* ---------- Footer ---------- */
+  footer { padding: 56px 0 40px; border-top: 1px solid var(--line); }
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .foot-links { display: flex; gap: 26px; font-size: 0.9rem; color: var(--muted); }
+  .foot-links a:hover { color: var(--ink); }
+  .foot-meta { font-size: 0.84rem; color: var(--muted); }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 940px) {
+    .hero-grid, .concept-grid, .carbon-grid, .modules-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-art { order: -1; max-width: 460px; margin-inline: auto; }
+    .carbon-art { min-height: 260px; }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .benefit-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .nav-links {
+      position: fixed; inset: 74px 0 auto 0;
+      flex-direction: column; align-items: flex-start;
+      gap: 4px; padding: 18px 24px 26px;
+      background: var(--cream); border-bottom: 1px solid var(--line);
+      transform: translateY(-12px); opacity: 0; pointer-events: none;
+      transition: 0.25s;
+    }
+    .nav-links.open { transform: none; opacity: 1; pointer-events: auto; }
+    .nav-links a { padding: 10px 0; width: 100%; }
+    .nav-toggle { display: block; }
+    .nav .btn-primary { display: none; }
+    .steps, .benefit-grid { grid-template-columns: 1fr; }
+    .signup { flex-direction: column; }
+    .signup .btn { justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="CO2+ forside">
+      <span class="mark">CO<sub>2</sub>+</span>
+      <span>CO2+</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#koncept">Konceptet</a>
+      <a href="#proces">Sådan virker det</a>
+      <a href="#co2">Bæredygtighed</a>
+      <a href="#system">Modulsystemet</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a href="#kontakt" class="btn btn-primary">Følg med</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow reveal">Bæredygtige typehuse</span>
+      <h1 class="reveal">Et hjem der giver <em>mere tilbage,</em> end det tager</h1>
+      <p class="lede reveal">CO2+ er et typehus-system, hvor bæredygtige huse bygges af træmoduler på et 60 cm grid. Du sætter dit hjem sammen, som du vil — vi sørger for, at det er gennemtænkt, energieffektivt og CO2-venligt.</p>
+      <div class="hero-cta reveal">
+        <a href="#koncept" class="btn btn-primary">Udforsk konceptet
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#proces" class="btn btn-ghost">Sådan virker det</a>
+      </div>
+    </div>
+    <div class="hero-art reveal" aria-hidden="true">
+      <!-- Modular house illustration -->
+      <svg viewBox="0 0 520 460" xmlns="http://www.w3.org/2000/svg" role="img">
+        <!-- sun -->
+        <circle cx="430" cy="92" r="42" fill="#e2a385" opacity="0.55"/>
+        <circle cx="430" cy="92" r="27" fill="#bd6442"/>
+        <!-- ground -->
+        <rect x="0" y="392" width="520" height="68" fill="#aeba9f" opacity="0.5"/>
+        <path d="M0 392 H520" stroke="#6e8062" stroke-width="2" opacity="0.5"/>
+        <!-- back tree -->
+        <g transform="translate(70 250)">
+          <rect x="22" y="92" width="9" height="52" rx="3" fill="#9d7b4e"/>
+          <circle cx="26" cy="62" r="42" fill="#6e8062"/>
+          <circle cx="26" cy="62" r="42" fill="#3f4d39" opacity="0.18"/>
+        </g>
+        <!-- house base modules -->
+        <g>
+          <!-- roof -->
+          <path d="M150 196 L300 110 L450 196 Z" fill="#bd6442"/>
+          <path d="M150 196 L300 110 L450 196 Z" fill="#3f4d39" opacity="0.10"/>
+          <!-- solar strip on roof -->
+          <path d="M300 130 L408 192 L360 192 L300 152 Z" fill="#2b2a24" opacity="0.35"/>
+          <!-- body -->
+          <rect x="172" y="196" width="256" height="196" fill="#cba87b"/>
+          <!-- module grid lines (60cm modules) -->
+          <g stroke="#9d7b4e" stroke-width="1.4" opacity="0.55">
+            <line x1="236" y1="196" x2="236" y2="392"/>
+            <line x1="300" y1="196" x2="300" y2="392"/>
+            <line x1="364" y1="196" x2="364" y2="392"/>
+            <line x1="172" y1="262" x2="428" y2="262"/>
+            <line x1="172" y1="328" x2="428" y2="328"/>
+          </g>
+          <!-- windows -->
+          <rect x="194" y="218" width="42" height="42" rx="3" fill="#f6f1e7"/>
+          <rect x="194" y="218" width="42" height="42" rx="3" fill="#6e8062" opacity="0.25"/>
+          <rect x="322" y="218" width="42" height="42" rx="3" fill="#f6f1e7"/>
+          <rect x="322" y="218" width="42" height="42" rx="3" fill="#6e8062" opacity="0.25"/>
+          <rect x="386" y="284" width="30" height="42" rx="3" fill="#f6f1e7"/>
+          <rect x="386" y="284" width="30" height="42" rx="3" fill="#6e8062" opacity="0.25"/>
+          <!-- door -->
+          <rect x="262" y="312" width="50" height="80" rx="4" fill="#3f4d39"/>
+          <circle cx="303" cy="352" r="3" fill="#cba87b"/>
+        </g>
+        <!-- front tree -->
+        <g transform="translate(404 286)">
+          <rect x="18" y="70" width="8" height="50" rx="3" fill="#9d7b4e"/>
+          <circle cx="22" cy="48" r="33" fill="#6e8062"/>
+        </g>
+        <!-- little CO2 leaf badge -->
+        <g transform="translate(120 132)">
+          <circle cx="0" cy="0" r="30" fill="#3f4d39"/>
+          <path d="M-12 4 C-12 -10 2 -14 13 -13 C13 0 2 8 -12 4 Z" fill="#aeba9f"/>
+          <path d="M-10 3 C-3 -2 6 -7 11 -10" stroke="#3f4d39" stroke-width="1.6" fill="none"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="wrap stats">
+    <div class="stat reveal"><b>60 cm</b><span>Modulært grid — alt går op</span></div>
+    <div class="stat reveal"><b>CO₂-negativt</b><span>Træ der lagrer kulstof</span></div>
+    <div class="stat reveal"><b>∞</b><span>Kombinationer, ét system</span></div>
+    <div class="stat reveal"><b>Uger</b><span>Ikke måneder på byggepladsen</span></div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="concept" id="koncept">
+  <div class="wrap concept-grid">
+    <div class="concept-copy">
+      <span class="eyebrow reveal">Konceptet</span>
+      <h2 class="reveal">Et byggesystem, ikke et færdigt hus</h2>
+      <p class="reveal">De fleste typehuse tvinger dig til at vælge mellem standard og frihed. CO2+ gør begge dele mulige. Vi har udviklet et bibliotek af gennemtestede træmoduler — vægge, tag, vinduer, køkken, bad — der alle passer ind i det samme 60 cm grid.</p>
+      <p class="reveal">Du kombinerer modulerne til præcis det hjem, du drømmer om. Fordi delene er kendte på forhånd, kender vi også prisen, kvaliteten og klimaaftrykket, før den første spade rammer jorden.</p>
+      <div class="pullout reveal">“Frihed til at forme dit hjem — uden at starte forfra hver gang.”</div>
+    </div>
+    <div class="concept-art reveal" aria-hidden="true">
+      <svg viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="480" height="400" rx="20" fill="#f6f1e7"/>
+        <!-- grid -->
+        <g stroke="#e4dac6" stroke-width="1">
+          <line x1="40" y1="40" x2="40" y2="360"/><line x1="100" y1="40" x2="100" y2="360"/>
+          <line x1="160" y1="40" x2="160" y2="360"/><line x1="220" y1="40" x2="220" y2="360"/>
+          <line x1="280" y1="40" x2="280" y2="360"/><line x1="340" y1="40" x2="340" y2="360"/>
+          <line x1="400" y1="40" x2="400" y2="360"/><line x1="440" y1="40" x2="440" y2="360"/>
+          <line x1="40" y1="40" x2="440" y2="40"/><line x1="40" y1="100" x2="440" y2="100"/>
+          <line x1="40" y1="160" x2="440" y2="160"/><line x1="40" y1="220" x2="440" y2="220"/>
+          <line x1="40" y1="280" x2="440" y2="280"/><line x1="40" y1="340" x2="440" y2="340"/>
+        </g>
+        <!-- modules snapped to grid -->
+        <rect x="40" y="100" width="120" height="120" rx="8" fill="#6e8062"/>
+        <rect x="160" y="100" width="120" height="60" rx="8" fill="#cba87b"/>
+        <rect x="160" y="160" width="60" height="60" rx="8" fill="#bd6442"/>
+        <rect x="220" y="160" width="60" height="120" rx="8" fill="#3f4d39"/>
+        <rect x="280" y="100" width="120" height="180" rx="8" fill="#aeba9f"/>
+        <rect x="40" y="220" width="180" height="60" rx="8" fill="#e2a385"/>
+        <!-- module dots -->
+        <g fill="#f6f1e7" opacity="0.85">
+          <circle cx="100" cy="160" r="6"/><circle cx="340" cy="190" r="6"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="proces">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow reveal">Sådan virker det</span>
+      <h2 class="reveal">Fra idé til indflytning i fire trin</h2>
+      <p class="reveal">En forudsigelig vej fra de første streger til nøglen i døren.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="num"></span>
+        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+        <h3>Vælg dine moduler</h3>
+        <p>Sammensæt rum, vægge og funktioner fra modulbiblioteket — efter liv, budget og grund.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num"></span>
+        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-6 9 6v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></div>
+        <h3>Sæt huset sammen</h3>
+        <p>Alt klikker på plads i 60 cm grid'et. Du ser plan, pris og klimaaftryk opdateres i realtid.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num"></span>
+        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v10l9 5 9-5V7z"/><path d="M12 22V12M3 7l9 5 9-5"/></svg></div>
+        <h3>Vi bygger i træ</h3>
+        <p>Modulerne præfabrikeres i bæredygtigt træ og samles på grunden på dage frem for måneder.</p>
+      </div>
+      <div class="step reveal">
+        <span class="num"></span>
+        <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></div>
+        <h3>Flyt ind</h3>
+        <p>Et sundt, energieffektivt hjem med lavt CO2-aftryk — klar til at vokse med dig over tid.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CO2 / SUSTAINABILITY -->
+<section id="co2">
+  <div class="wrap">
+    <div class="carbon reveal">
+      <div class="carbon-grid">
+        <div class="carbon-copy">
+          <span class="eyebrow">Derfor plusset</span>
+          <h2>Et hus kan være en del af løsningen</h2>
+          <p>Beton og stål udleder CO2. Træ gør det modsatte: mens skoven vokser, trækker den kulstof ud af luften og gemmer det i træet. Bygger vi dit hjem i træ, bliver huset til et lager af bundet CO2 — i årtier.</p>
+          <p>Sammen med tæt, energieffektiv konstruktion er målet enkelt: et hjem, der over sin levetid binder mere CO2, end det koster at bygge og bo i. Det er plusset i CO2+.</p>
+          <div class="meter">
+            <div class="meter-row"><span>Traditionelt murstenshus</span><div class="meter-track"><div class="meter-fill" data-w="92%" style="background:#e2a385"></div></div></div>
+            <div class="meter-row"><span>CO2+ træhus</span><div class="meter-track"><div class="meter-fill" data-w="22%" style="background:#aeba9f"></div></div></div>
+          </div>
+          <p style="font-size:0.8rem;margin-top:14px;opacity:0.7">Illustrativ sammenligning af indlejret CO2 — konkrete tal beregnes pr. projekt.</p>
+        </div>
+        <div class="carbon-art" aria-hidden="true">
+          <svg viewBox="0 0 360 360" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="360" height="360" fill="#36422f"/>
+            <!-- abstract growth rings -->
+            <g fill="none" stroke="#6e8062" stroke-width="2" opacity="0.55">
+              <circle cx="180" cy="210" r="40"/><circle cx="180" cy="210" r="72"/>
+              <circle cx="180" cy="210" r="104"/><circle cx="180" cy="210" r="136"/>
+            </g>
+            <!-- trunk -->
+            <rect x="172" y="210" width="16" height="120" rx="5" fill="#9d7b4e"/>
+            <!-- leaves -->
+            <circle cx="180" cy="150" r="58" fill="#6e8062"/>
+            <circle cx="138" cy="178" r="38" fill="#aeba9f"/>
+            <circle cx="224" cy="176" r="40" fill="#7d8f6f"/>
+            <!-- CO2 arrows going in -->
+            <g stroke="#e2a385" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.9">
+              <path d="M60 70 q20 24 44 30"/><path d="M300 60 q-22 28 -48 34"/>
+              <path d="M44 150 q26 8 44 6"/>
+            </g>
+            <g fill="#e2a385" font-family="Inter, sans-serif" font-size="13" font-weight="600" opacity="0.95">
+              <text x="40" y="60">CO₂</text><text x="286" y="50">CO₂</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULE SYSTEM -->
+<section id="system" class="concept">
+  <div class="wrap modules-grid">
+    <div class="modules-art reveal" aria-hidden="true">
+      <svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+        <rect width="480" height="360" rx="20" fill="#fbf8f1"/>
+        <!-- ruler -->
+        <g stroke="#cba87b" stroke-width="1.5">
+          <line x1="40" y1="312" x2="440" y2="312"/>
+          <line x1="40" y1="306" x2="40" y2="318"/><line x1="120" y1="306" x2="120" y2="318"/>
+          <line x1="200" y1="306" x2="200" y2="318"/><line x1="280" y1="306" x2="280" y2="318"/>
+          <line x1="360" y1="306" x2="360" y2="318"/><line x1="440" y1="306" x2="440" y2="318"/>
+        </g>
+        <g fill="#6c6557" font-family="Inter, sans-serif" font-size="11">
+          <text x="64" y="338">60</text><text x="144" y="338">120</text><text x="224" y="338">180</text>
+          <text x="304" y="338">240 cm</text>
+        </g>
+        <!-- stacked modules -->
+        <rect x="40" y="60" width="160" height="120" rx="8" fill="#6e8062"/>
+        <rect x="200" y="60" width="80" height="120" rx="8" fill="#cba87b"/>
+        <rect x="280" y="60" width="160" height="60" rx="8" fill="#bd6442"/>
+        <rect x="280" y="120" width="160" height="60" rx="8" fill="#aeba9f"/>
+        <rect x="40" y="180" width="80" height="100" rx="8" fill="#3f4d39"/>
+        <rect x="120" y="180" width="160" height="100" rx="8" fill="#e2a385"/>
+        <rect x="280" y="180" width="160" height="100" rx="8" fill="#7d8f6f"/>
+        <g fill="#fbf8f1" font-family="Fraunces, serif" font-size="15" opacity="0.9">
+          <text x="105" y="126">Stue</text><text x="222" y="126">Bad</text>
+          <text x="330" y="96">Køkken</text><text x="64" y="236">Gang</text>
+          <text x="168" y="236">Værelse</text><text x="330" y="236">Soverum</text>
+        </g>
+      </svg>
+    </div>
+    <div class="modules-copy">
+      <span class="eyebrow reveal">Modulsystemet</span>
+      <h2 class="reveal" style="font-size:clamp(1.9rem,3.6vw,2.8rem);margin-top:16px">Ét mål binder det hele sammen: 60 cm</h2>
+      <p class="reveal" style="color:var(--muted);margin-top:18px;font-size:1.07rem">Hele systemet hviler på et grid på 60 centimeter. Det lyder teknisk, men det er nøglen til friheden: når hvert modul er et multiplum af samme mål, passer alt sammen — og kan bygges om, udvides eller skilles ad igen senere.</p>
+      <p class="reveal" style="color:var(--muted);margin-top:14px;font-size:1.07rem">Et barneværelse i dag kan blive til et arbejdsværelse i morgen. Huset følger livet — uden at skulle rives ned.</p>
+      <div class="tag-row reveal">
+        <span class="tag">Præfabrikeret</span>
+        <span class="tag">Kan udvides</span>
+        <span class="tag">Skilles ad &amp; genbruges</span>
+        <span class="tag">Forudsigelig pris</span>
+        <span class="tag">Træ &amp; naturmaterialer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow reveal">Hvorfor CO2+</span>
+      <h2 class="reveal">Bæredygtigt behøver ikke betyde besværligt</h2>
+    </div>
+    <div class="benefit-grid">
+      <div class="benefit reveal">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5-4 8-8 8-12a8 8 0 1 0-16 0c0 4 3 8 8 12z"/><path d="M12 11a3 3 0 1 0 0-6"/></svg></div>
+        <h3>Lavt klimaaftryk</h3>
+        <p>Træ og naturmaterialer binder CO2 i stedet for at udlede det — bygget ind i hvert modul.</p>
+      </div>
+      <div class="benefit reveal">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></div>
+        <h3>Frihed i formen</h3>
+        <p>Uendelige kombinationer fra ét gennemtænkt system. Dit hus, ikke katalogets.</p>
+      </div>
+      <div class="benefit reveal">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h3>Forudsigelig pris</h3>
+        <p>Kendte moduler betyder kendte priser og tider — ingen ubehagelige overraskelser undervejs.</p>
+      </div>
+      <div class="benefit reveal">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 18 0M3 12a9 9 0 0 0 18 0"/><path d="M12 3v18"/></svg></div>
+        <h3>Sundt indeklima</h3>
+        <p>Diffusionsåbne trækonstruktioner og naturmaterialer giver et hjem, der ånder.</p>
+      </div>
+      <div class="benefit reveal">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></div>
+        <h3>Hurtig opførelse</h3>
+        <p>Præfabrikation flytter arbejdet i tørvejr og samler huset på grunden på dage.</p>
+      </div>
+      <div class="benefit reveal">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M12 22V12M3.3 7L12 12l8.7-5"/></svg></div>
+        <h3>Bygget til at vare</h3>
+        <p>Kan udvides, ombygges og skilles ad igen — materialerne kan genbruges, ikke smides ud.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="vision">
+  <div class="wrap">
+    <span class="eyebrow reveal" style="margin-bottom:28px">Visionen</span>
+    <blockquote class="reveal">Huse, der er <em>nemme at bygge,</em> gode at bo i — og venlige mod kloden.</blockquote>
+    <p class="by reveal">— Tanken bag CO2+</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="kontakt">
+  <div class="wrap">
+    <div class="cta-card reveal">
+      <h2>Vil du følge med, mens CO2+ tager form?</h2>
+      <p>CO2+ er et koncept under udvikling. Skriv dig op, så deler vi de første huse, moduler og tegninger, så snart de er klar.</p>
+      <form class="signup" id="signupForm" novalidate>
+        <input type="email" id="email" placeholder="Din e-mail" aria-label="Din e-mail" required />
+        <button type="submit" class="btn btn-primary">Hold mig opdateret</button>
+      </form>
+      <p class="cta-note" id="formNote">Ingen spam — kun nyt om projektet. Du kan altid framelde dig.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top">
+      <span class="mark">CO<sub>2</sub>+</span>
+      <span>CO2+</span>
+    </a>
+    <nav class="foot-links">
+      <a href="#koncept">Konceptet</a>
+      <a href="#proces">Proces</a>
+      <a href="#co2">Bæredygtighed</a>
+      <a href="#system">Modulsystem</a>
+    </nav>
+    <span class="foot-meta">© 2026 CO2+ · Et koncept under udvikling</span>
+  </div>
+</footer>
+
+<script>
+  // Header shadow on scroll
+  const header = document.querySelector('header');
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile nav
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 60 + 'ms';
+    io.observe(el);
+  });
+
+  // Animate CO2 meters when in view
+  const carbon = document.querySelector('.carbon');
+  const meterIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.meter-fill').forEach(f => f.style.width = f.dataset.w);
+        meterIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  if (carbon) meterIO.observe(carbon);
+
+  // Signup (front-end only placeholder)
+  const form = document.getElementById('signupForm');
+  const note = document.getElementById('formNote');
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const email = document.getElementById('email');
+    if (!email.value || !email.validity.valid) {
+      note.textContent = 'Indtast venligst en gyldig e-mail.';
+      note.style.color = '#bd6442';
+      return;
+    }
+    note.textContent = 'Tak! Vi skriver, så snart der er nyt. ✦';
+    note.style.color = '#3f4d39';
+    form.reset();
+  });
+</script>
+</body>
+</html>
