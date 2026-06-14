@@ -345,7 +345,20 @@
     color: var(--ink);
   }
   .signup input:focus { outline: 2px solid var(--sage-soft); outline-offset: 1px; }
-  .cta-note { margin-top: 16px; font-size: 0.82rem; color: var(--muted); }
+  .cta-note { margin-top: 18px; font-size: 0.82rem; color: var(--muted); }
+  .call-label { margin-top: 26px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sage); }
+  .call-link {
+    display: inline-flex; align-items: center; gap: 14px;
+    margin-top: 12px; padding: 16px 34px;
+    border-radius: 999px;
+    background: var(--forest); color: var(--cream);
+    font-family: "Fraunces", Georgia, serif;
+    font-size: clamp(1.5rem, 4vw, 1.9rem); font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .call-link:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .call-link svg { width: 26px; height: 26px; flex-shrink: 0; }
 
   /* ---------- Footer ---------- */
   footer { padding: 56px 0 40px; border-top: 1px solid var(--line); }
@@ -721,12 +734,13 @@
   <div class="wrap">
     <div class="cta-card reveal">
       <h2>Vil du følge med, mens CO2+ tager form?</h2>
-      <p>CO2+ er et koncept under udvikling. Skriv dig op, så deler vi de første huse, moduler og tegninger, så snart de er klar.</p>
-      <form class="signup" id="signupForm" novalidate>
-        <input type="email" id="email" placeholder="Din e-mail" aria-label="Din e-mail" required />
-        <button type="submit" class="btn btn-primary">Hold mig opdateret</button>
-      </form>
-      <p class="cta-note" id="formNote">Ingen spam — kun nyt om projektet. Du kan altid framelde dig.</p>
+      <p>CO2+ er et koncept under udvikling. Har du spørgsmål, en grund i tankerne, eller bare lyst til at høre mere? Så tag fat i os — vi tager gerne en uforpligtende snak.</p>
+      <p class="call-label">Ring til os</p>
+      <a href="tel:+4560605040" class="call-link" aria-label="Ring til CO2+ på 60 60 50 40">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>60 60 50 40</span>
+      </a>
+      <p class="cta-note">Du kan også sende en sms — så vender vi tilbage, så snart vi kan.</p>
     </div>
   </div>
 </section>
@@ -783,21 +797,7 @@
   }, { threshold: 0.4 });
   if (carbon) meterIO.observe(carbon);
 
-  // Signup (front-end only placeholder)
-  const form = document.getElementById('signupForm');
-  const note = document.getElementById('formNote');
-  form.addEventListener('submit', (ev) => {
-    ev.preventDefault();
-    const email = document.getElementById('email');
-    if (!email.value || !email.validity.valid) {
-      note.textContent = 'Indtast venligst en gyldig e-mail.';
-      note.style.color = '#bd6442';
-      return;
-    }
-    note.textContent = 'Tak! Vi skriver, så snart der er nyt. ✦';
-    note.style.color = '#3f4d39';
-    form.reset();
-  });
+  // Kontakt sker via telefon (tel:-link) — ingen formular at håndtere.
 </script>
 </body>
 </html>
